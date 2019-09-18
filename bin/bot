@@ -15,15 +15,13 @@ EOF
 
 function get_chat_resp_json {
   query=$1
-  curl -G 'https://api.ownthink.com/bot' \
-    --data-urlencode 'appid=a10347230c3ea20b10de009d8796269b' \
-    --data-urlencode 'userid=lark-bot-maid-yui' \
-    --data-urlencode 'spoken='"${query}" 2>/dev/null
+  curl -G 'http://10.8.119.117:24325/chat' \
+    --data-urlencode 'text='"${query}" 2>/dev/null
 }
 
 function get_chat_resp {
   query=$1
-  get_chat_resp_json "${query}" | json_parse '"data","info","text"' | remove_unused
+  get_chat_resp_json "${query}" | escape_string | json_parse '"text"' | remove_unused
 }
 
 function main {
